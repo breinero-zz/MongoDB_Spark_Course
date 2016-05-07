@@ -82,13 +82,11 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
 sudo apt-get update
 sudo apt-get install -y mongodb-org git openjdk-7-jdk sbt
 
-wget -q http://d3kbcqa49mib13.cloudfront.net/spark-1.6.1.tgz
-tar -xzf spark-1.6.1.tgz
+echo "Downloading Spark..."
+wget -q http://d3kbcqa49mib13.cloudfront.net/spark-1.6.1-bin-hadoop2.6.tgz -O spark-1.6.1.tgz
+tar -xzf spark-1.6.1.tgz && mv spark-1.6.1-bin-hadoop2.6 spark-1.6.1
 sudo chown -R vagrant:vagrant spark-1.6.1
 
-cd spark-1.6.1
-build/mvn -DskipTests clean package
-cd
 git clone https://github.com/mongodb/mongo-spark
 
 wget https://data.nasa.gov/api/views/9kcy-zwvn/rows.csv?accessType=DOWNLOAD -O eva.csv
