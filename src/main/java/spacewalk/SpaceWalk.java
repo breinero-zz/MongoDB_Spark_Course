@@ -2,13 +2,15 @@ package spacewalk;
 
 import com.mongodb.spark.api.java.MongoSpark;
 import com.mongodb.spark.config.WriteConfig;
+
+import org.bson.Document;
 import com.mongodb.spark.rdd.api.java.JavaMongoRDD;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.*;
-import org.bson.Document;
+
 import scala.Tuple2;
 
 import java.io.Serializable;
@@ -30,7 +32,6 @@ public class SpaceWalk implements Serializable {
 
     public static void main(String[] args) {
 
-
         SparkConf conf = new SparkConf()
                 .setMaster("local")
                 .setAppName("MongoSparkConnectorTour")
@@ -43,7 +44,7 @@ public class SpaceWalk implements Serializable {
         JavaMongoRDD<Document> rdd = MongoSpark.load(jsc);
 
 
-        JavaPairRDD<String, Integer> better = rdd.flatMapToPair(
+        JavaPairRDD<String, Integer> logs = rdd.flatMapToPair(
                 new PairFlatMapFunction<Document, String, Integer>
                 () {
             @Override
@@ -76,7 +77,7 @@ public class SpaceWalk implements Serializable {
             }
         });
 
-        JavaPairRDD<String, Integer> totalHours =  better.reduceByKey(
+        JavaPairRDD<String, Integer> totalHours =  logs.reduceByKey(
                 new Function2<Integer, Integer, Integer>() {
                     @Override
                     public Integer call(Integer v1, Integer v2) throws Exception {
@@ -97,7 +98,7 @@ public class SpaceWalk implements Serializable {
             }
         };
 
-        JavaRDD<Document> records = totalHours.flatMap( map );
+        JavaRDD<Document>  records  = totalHours.flatMap( map );
 
         totalHours.foreach(
                 new VoidFunction<Tuple2<String, Integer>>() {
