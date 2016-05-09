@@ -1,14 +1,14 @@
 import com.mongodb.spark._
-import com.mongodb.spark.config._
 import com.mongodb.spark.rdd.MongoRDD
 import org.bson.Document
 
 val rdd = sc.loadFromMongoDB()
 
-//println( rdd.count() )
-//println ( rdd.first() )
-//for( doc <- rdd.take( 10 ) ) println( doc )
+println( rdd.count() )
+println ( rdd.first() )
+for( doc <- rdd.take( 10 ) ) println( doc )
 
+import com.mongodb.spark.config._
 
 val readConf = ReadConfig( sc )
 val readConfig = ReadConfig( Map("collection" -> "eva" ), Some(readConf))
