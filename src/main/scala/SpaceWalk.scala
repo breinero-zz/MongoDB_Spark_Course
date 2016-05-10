@@ -34,6 +34,11 @@ def  breakoutCrew (  document: Document  ): List[(String,Int)]  = {
 
 val logs = rdd.flatMap( breakoutCrew ).reduceByKey( (m1: Int, m2: Int) => ( m1 + m2 ) )
 
+logs.foreach( println )
+
+val writeConf = WriteConfig(sc)
+val writeConfig = WriteConfig(Map("collection" -> "astronautTotals", "writeConcern.w" -> "majority", "db" -> "nasa"), Some(writeConf))
+
 def mapToDocument( tuple: (String, Int )  ): Document = {
   val doc = new Document();
   doc.put( "name", tuple._1 )
@@ -41,9 +46,6 @@ def mapToDocument( tuple: (String, Int )  ): Document = {
 
   return doc
 }
-
-val writeConf = WriteConfig(sc)
-val writeConfig = WriteConfig(Map("collection" -> "astronautTotals", "writeConcern.w" -> "majority", "db" -> "nasa"), Some(writeConf))
 
 logs.map( mapToDocument ).saveToMongoDB( writeConfig )
 
