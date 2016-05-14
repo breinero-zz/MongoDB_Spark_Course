@@ -69,4 +69,7 @@ sqlContext.sql("SELECT astronautTotals.name, astronautTotals.minutes FROM astron
 sqlContext.sql("SELECT astronautTotals.name, astronautTotals.minutes, evas.Vehicle, evas.Duration FROM " +
   "astronautTotals JOIN evas ON astronautTotals.name LIKE evas.Crew"  ).show()
 
-
+// Aggregation Example
+val rdd = sc.loadFromMongoDB()
+val aggRdd = rdd.withPipeline(Seq(Document.parse("{ $match: { Country: \"USA\" } }")))
+aggRdd.take( 10 ).foreach( println )
