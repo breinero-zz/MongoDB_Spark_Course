@@ -70,7 +70,7 @@ public class SpaceWalk implements Serializable {
                         .map(new Function<String, Tuple2<String, Integer>>() {
                             @Override
                             public Tuple2<String, Integer> apply(String c) {
-                                return new Tuple2<>(c, finalMinutes);
+                                return new Tuple2<String, Integer>(c, finalMinutes);
                             }
                         })
                         .collect(Collectors.<Tuple2<String, Integer>>toList());
@@ -111,7 +111,7 @@ public class SpaceWalk implements Serializable {
 
         WriteConfig defaultWriteConfig = WriteConfig.create(jsc);
         Map<String, String> writeOverrides = new HashMap<String, String>();
-        writeOverrides.put("collection", "astronautHours");
+        writeOverrides.put("collection", "astronautTotals");
         writeOverrides.put("databaseName", "nasa");
         writeOverrides.put("writeConcern.w", "majority");
         WriteConfig writeConfig = WriteConfig.create(writeOverrides, defaultWriteConfig);

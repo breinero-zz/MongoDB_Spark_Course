@@ -8,8 +8,10 @@ ext.scalaVersion = '2.10'
 
 allprojects {
     apply plugin: 'java'
-    apply plugin: 'scala'
+    //apply plugin: 'scala'
     apply plugin: 'application'
+
+    mainClassName = "spacewalk.SpaceWalk"
 
     repositories {
         mavenCentral()
