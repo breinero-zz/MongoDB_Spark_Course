@@ -93,8 +93,15 @@ wget -q http://d3kbcqa49mib13.cloudfront.net/spark-1.6.1-bin-hadoop2.6.tgz -O sp
 tar -xzf spark-1.6.1.tgz && mv spark-1.6.1-bin-hadoop2.6 spark-1.6.1
 sudo chown -R vagrant:vagrant spark-1.6.1
 
-git clone https://github.com/mongodb/mongo-spark
+echo "Downloading and building course examples..."
+git clone https://github.com/breinero/MongoDB_Spark_Course.git
+sudo chown -R vagrant:vagrant MongoDB_Spark_Course
+cd MongoDB_Spark_Course
+chmod 755 gradlew*
+./gradlew jar
 
+echo "Loading dataset"
+cd
 wget https://data.nasa.gov/api/views/9kcy-zwvn/rows.csv?accessType=DOWNLOAD -O eva.csv
 mongoimport --headerline --file eva.csv --type csv --db nasa --collection eva
 
