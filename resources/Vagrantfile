@@ -82,7 +82,7 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
 add-apt-repository ppa:webupd8team/java
 
 sudo apt-get update
-sudo apt-get install -y mongodb-org git sbt
+sudo apt-get install -y mongodb-org git sbt 
 
 sudo echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 apt-get -y -q install oracle-java8-installer
@@ -97,8 +97,8 @@ echo "Downloading and building course examples..."
 git clone https://github.com/breinero/MongoDB_Spark_Course.git
 sudo chown -R vagrant:vagrant MongoDB_Spark_Course
 cd MongoDB_Spark_Course
-chmod 755 gradlew*
-./gradlew jar
+sudo -u vagrant chmod 755 gradlew*
+sudo -u vagrant ./gradlew jar
 
 echo "Loading dataset"
 cd
