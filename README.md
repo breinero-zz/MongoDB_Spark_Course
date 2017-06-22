@@ -15,3 +15,7 @@ import com.mongodb.spark._
 import com.mongodb.spark.rdd.MongoRDD
 sc.loadFromMongoDB().take( 10 ).foreach( println )
 ```
+
+## Docker image with Spark and Mongo setup for the course
+- Install docker
+- `docker run -it -p27017:27017 -p8080:8080 -p7077:7077 nithanaroy/spark_mongo:0.1.1`
